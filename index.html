@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Night Shift: free tactical shooter in your browser</title>
+<meta name="description" content="Hunt by light. Hide in the dark. Night Shift is a free tactical top-down shooter you play right in your browser, on phone or PC: a 12-mission stealth story plus solo, 2 vs 2 and squad battles.">
+<meta property="og:title" content="Night Shift: 0 skill or 100 skill?">
+<meta property="og:description" content="Free tactical shooter in your browser. No download. Phone or PC.">
+<meta property="og:image" content="assets/og.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#06080e">
+<link rel="icon" href="play/index.icon.png">
+<style>
+@font-face { font-family: "Chakra"; src: url("assets/ChakraPetch-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Chakra"; src: url("assets/ChakraPetch-SemiBold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Chakra"; src: url("assets/ChakraPetch-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+:root {
+  --bg: #07080a; --panel: rgba(8, 9, 8, 0.86); --line: rgba(189, 199, 173, 0.2); --line2: rgba(189, 199, 173, 0.5);
+  --text: #eaeee3; --muted: #949e8c; --dim: #666d60; --amber: #f7b538; --red: #ff5242; --ok: #8cdb6d;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); font-family: "Chakra", system-ui, sans-serif; font-weight: 500; }
+a { color: inherit; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+.bracket { position: relative; background: var(--panel); border: 1px solid var(--line); }
+.bracket::before, .bracket::after { content: ""; position: absolute; width: 14px; height: 14px; border: 2px solid var(--line2); pointer-events: none; }
+.bracket::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+.bracket::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+.amber.bracket::before, .amber.bracket::after { border-color: var(--amber); }
+.label { font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; font-size: 12px; color: var(--muted); }
+.head { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; }
+.head::before { content: ""; width: 4px; height: 14px; background: var(--amber); }
+.head::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+/* Hero */
+.hero { position: relative; min-height: 92vh; display: flex; align-items: center; overflow: hidden; }
+.hero .bg { position: absolute; inset: 0; background: url("assets/hero.jpg") center/cover no-repeat; filter: brightness(0.38) saturate(0.9); transform: scale(1.04); }
+.hero .grid { position: absolute; inset: 0; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 48px 48px; opacity: 0.18; }
+.hero .shade { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, transparent 0%, rgba(0,0,0,0.65) 75%); }
+.hero .wrap { position: relative; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; width: 100%; }
+.logo { font-weight: 700; font-size: clamp(56px, 9vw, 112px); line-height: 0.92; letter-spacing: 0.04em; color: var(--amber); margin: 10px 0 14px; text-shadow: 0 0 28px rgba(247, 181, 56, 0.25); }
+.tag { font-size: clamp(18px, 2.4vw, 24px); color: var(--text); margin: 0 0 26px; }
+.cta { display: inline-flex; align-items: center; gap: 14px; padding: 18px 34px; background: rgba(247, 181, 56, 0.16); border: 1px solid var(--amber); border-left-width: 5px; color: var(--amber); font-weight: 700; font-size: 26px; letter-spacing: 0.08em; text-decoration: none; transition: background 0.15s; }
+.cta:hover { background: rgba(247, 181, 56, 0.28); }
+.cta small { font-size: 13px; color: var(--muted); letter-spacing: 0.16em; font-weight: 600; }
+.sub { margin-top: 14px; }
+.phone { justify-self: center; width: min(300px, 70vw); aspect-ratio: 9 / 16; padding: 8px; }
+.phone video { width: 100%; height: 100%; object-fit: cover; display: block; background: #000; }
+/* Sections */
+section { padding: 64px 0 8px; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { padding: 22px 20px; }
+.card h3 { margin: 6px 0 8px; font-weight: 700; font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; }
+.card p { margin: 0; color: #c9cfc2; line-height: 1.5; }
+.shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.shots img { width: 100%; display: block; aspect-ratio: 9 / 12; object-fit: cover; border: 1px solid var(--line); }
+.keys { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.keys .card div { display: grid; grid-template-columns: 90px 1fr; gap: 8px 12px; font-size: 15px; }
+kbd { font-family: inherit; font-weight: 600; letter-spacing: 0.12em; font-size: 12px; text-align: center; padding: 2px 6px; border: 1px solid var(--line2); background: rgba(255,255,255,0.05); }
+.dot { display: inline-block; width: 7px; height: 7px; background: var(--ok); margin-right: 8px; vertical-align: middle; }
+footer { padding: 48px 0 40px; color: var(--dim); font-size: 13px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.bigplay { text-align: center; padding: 56px 0 24px; }
+@media (max-width: 860px) {
+  .hero .wrap { grid-template-columns: 1fr; text-align: center; padding-top: 28px; padding-bottom: 28px; }
+  .cards, .shots { grid-template-columns: 1fr; }
+  .keys { grid-template-columns: 1fr; }
+  .shots img { aspect-ratio: 16 / 12; }
+  .cta { font-size: 22px; padding: 16px 26px; }
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="bg"></div><div class="grid"></div><div class="shade"></div>
+  <div class="wrap">
+    <div>
+      <div class="label">Tactical // Hunt by light. Hide in the dark.</div>
+      <h1 class="logo">NIGHT<br>SHIFT</h1>
+      <p class="tag">The power fails. You only see what your torch lights up, and your torch gives you away. Be the last one standing.</p>
+      <a class="cta" href="play/">PLAY FREE NOW</a>
+      <div class="sub label"><span class="dot"></span>No download · Phone or PC · Free</div>
+    </div>
+    <div class="phone bracket amber">
+      <video src="assets/trailer.mp4" poster="assets/hero.jpg" autoplay muted loop playsinline preload="metadata"></video>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section>
+    <h2 class="head label">What's inside</h2>
+    <div class="cards">
+      <div class="card bracket"><div class="label">Story</div><h3>Shade vs the Syndicate</h3><p>12 stealth missions against six bosses across docks, a tower, a clinic, a prison and a penthouse. Pick your loadout, cut the power, beat the cameras, and take guards down before they radio for help.</p></div>
+      <div class="card bracket"><div class="label">Battle</div><h3>Solo · 2 vs 2 · Squads</h3><p>12 operators, last one standing. 30 seconds of light to grab gear, then the dark. Sectors lock down and fill with gas, so keep moving.</p></div>
+      <div class="card bracket"><div class="label">Skill</div><h3>Headshots and the knife</h3><p>Line up headshots, chain double and triple kills, or slip in close for a silent knife kill. Unlock outfits, weapon finishes and torch colours, and clear three daily orders every day.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="head label">From the field</h2>
+    <div class="shots">
+      <img src="assets/shot1.jpg" alt="A triple headshot kill in the dark" loading="lazy">
+      <img src="assets/shot2.jpg" alt="Sneaking through the plant with the torch off" loading="lazy">
+      <img src="assets/shot3.jpg" alt="Victory: last one standing" loading="lazy">
+    </div>
+  </section>
+
+  <section>
+    <h2 class="head label">How to play</h2>
+    <div class="keys">
+      <div class="card bracket"><div class="label">PC</div><h3>Keyboard and mouse</h3>
+        <div><kbd>WASD</kbd><span>Move</span><kbd>MOUSE</kbd><span>Aim and shoot</span><kbd>SHIFT</kbd><span>Sprint (loud)</span><kbd>C</kbd><span>Sneak (silent)</span><kbd>F</kbd><span>Torch on / off</span><kbd>V</kbd><span>Knife</span><kbd>E</kbd><span>Pick up, takedown</span><kbd>3 - 6</kbd><span>Flare, radar, night vision, medkit</span></div></div>
+      <div class="card bracket"><div class="label">Phone</div><h3>Touch</h3>
+        <div><kbd>LEFT</kbd><span>Drag to move (push all the way to sprint)</span><kbd>RIGHT</kbd><span>Drag to aim, push past the ring to shoot</span><kbd>BUTTONS</kbd><span>Reload, use, knife, swap, torch, sneak</span><kbd>GADGETS</kbd><span>Tap them at the bottom</span><kbd>TIP</kbd><span>Turn your phone sideways</span></div></div>
+    </div>
+  </section>
+
+  <div class="bigplay"><a class="cta" href="play/">PLAY FREE NOW</a></div>
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Night Shift. Bots fill every seat until online play arrives.</span>
+  <span><a href="privacy.html">Privacy</a></span>
+</footer>
+</body>
+</html>
